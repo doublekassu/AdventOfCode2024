@@ -2,8 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class App {
-    public static void main(String[] args) throws Exception {
+public class Puzzle1 {
+    public static void main(String[] args) {
+        //Insert the lists values as a String
         String allNumbers = "58789   28882\r\n" + //
                         "27059   23721\r\n" + //
                         "86784   91527\r\n" + //
@@ -1005,10 +1006,12 @@ public class App {
                         "34246   52806\r\n" + //
                         "83116   82954";
 
+        //Implement scanner and left, right lists
         Scanner scanner = new Scanner(allNumbers);
         ArrayList<Integer> leftList = new ArrayList<>();
         ArrayList<Integer> rightList = new ArrayList<>();
         Integer oddEven = 0;
+        //Determine whether to add to left or right list. If current addition is left, next on is right with variable oddEven
         while (scanner.hasNextInt()) {
             if (oddEven.equals(0)) {
                 leftList.add(scanner.nextInt());
@@ -1021,22 +1024,24 @@ public class App {
         }
         scanner.close();
 
+        //Sort to ascending order
         Collections.sort(leftList);
         Collections.sort(rightList);
 
+        //Implement list to add all of the distance differences between left and right lists values
         ArrayList<Integer> distanceDifferenceList = new ArrayList<>();
 
         for (int i=0; i<leftList.size(); i++) {
+            //Positive value of the distance between the values
             Integer positiveSubtraction = Math.abs(leftList.get(i)-rightList.get(i));
             distanceDifferenceList.add(positiveSubtraction);
         }
 
+        //Calculate the total difference of all of the lists values
         Integer totalDifference = 0;
         for (int i=0; i<distanceDifferenceList.size(); i++) {
             totalDifference += distanceDifferenceList.get(i);
         }
         System.out.println("Total distance difference between lists: " + totalDifference);
-
-
     }
 }
