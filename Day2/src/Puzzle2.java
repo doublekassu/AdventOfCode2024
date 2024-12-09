@@ -3,10 +3,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Puzzle1 {
+public class Puzzle2 {
     public static void main(String[] args) {
         //Insert the lists values as a String
-        String inputs = "67 69 71 72 75 78 76\r\n" + //
+        String inputs = /*"67 69 71 72 75 78 76\r\n" + //
                         "4 6 7 9 11 12 12\r\n" + //
                         "20 22 25 27 28 29 33\r\n" + //
                         "35 37 39 42 43 46 48 53\r\n" + //
@@ -1005,7 +1005,9 @@ public class Puzzle1 {
                         "83 85 87 90 91 94 97 98\r\n" + //
                         "64 66 69 70 71 72 75 76\r\n" + //
                         "57 55 52 51 49\r\n" + //
-                        "15 17 20 23 25";
+                        "15 17 20 23 25\r\n" + //
+                         */
+                        "10 11 12 15 14";
 
         //Make every row a String list by splitting them from the line switch
         String[] rows = inputs.split("\r\n");
@@ -1019,17 +1021,24 @@ public class Puzzle1 {
         }
         //Count the safe reports
         Integer safeListCounter = 0;
+        Integer ascendedMaxOne = 0;
+        Integer descendedMaxOne = 0;
 
         for (List<Integer> row : listOfLists) {
-            boolean ascendOrDescend = false;
-            boolean differ = true;
-            //Sort to ascending
-            List<Integer> ascendedRow = row.stream().sorted().collect(Collectors.toList());
-            //Check if the row is already ascending or descending
-            if (row.equals(ascendedRow) || row.equals(ascendedRow.reversed())) {
-                ascendOrDescend = true;
+            //Sort to ascending¨
+            for (int i=0; i<row.size(); i++) {
+                Integer removedValue = row.remove(i);
+                List<Integer> ascendedRow = row.stream().sorted().collect(Collectors.toList());
+                if (!row.equals(ascendedRow)) {
+                    ascendedMaxOne++;
+                }
+                row.add(i, removedValue);
             }
-
+            System.out.println(ascendedMaxOne);
+            /*
+            //Sort to descending
+            List<Integer> descendedRow = ascendedRow.reversed();
+            
             Integer currentValue = ascendedRow.get(0) - 1;
             for (int i=0; i<ascendedRow.size(); i++) {
                 //If current value's and next value's difference is more than 3 or current value is the same as the next one, set differ to false
@@ -1038,13 +1047,15 @@ public class Puzzle1 {
                 }
                 currentValue = ascendedRow.get(i);
             }
-            
-            //If both terms are true, add 1 to the safeListCounter
-            if (differ && ascendOrDescend) {
+            */
+            if (ascendedMaxOne <= 1) {
                 safeListCounter += 1;
             }
+            ascendedMaxOne = 0;
         }
+        /*
         System.out.println("Total amount of reports: " + listOfLists.size());
         System.out.println("Total amount of safe reports (the correct answer): " + safeListCounter);
+        */
     }
 }
