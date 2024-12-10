@@ -1047,13 +1047,24 @@ public class Puzzle2 {
             Integer currentValue = ascendedRow.get(0) - 1;
             for (int i=0; i<ascendedRow.size(); i++) {
                 //If current value's and next value's difference is more than 3 or current value is the same as the next one, set differ to false
-                if (((ascendedRow.get(i) - currentValue) >= 4) || ascendedRow.get(i).equals(currentValue)) {
+                if (!((ascendedRow.get(i) - currentValue) <= 3) || ascendedRow.get(i).equals(currentValue)) {
                     differ = false;
                 }
                 currentValue = ascendedRow.get(i);
             }
             
-            //Eka ehto pätee, mutta tokassa vaikeuksia!
+            if (!differ) {
+                differ = true;
+                currentValue = ascendedRow.get(0) - 1;
+                for (int i=0; i<row.size(); i++) {
+                    Integer removedValue = ascendedRow.remove(i);
+                    if (!((ascendedRow.get(i) - currentValue) <= 3) || ascendedRow.get(i).equals(currentValue)) {
+                        differ = false;
+                    }
+                    currentValue = removedValue;
+                    ascendedRow.add(i, removedValue);
+                }
+            }
             //If both terms are true, add 1 to the safeListCounter
             if (differ) {
                 safeListCounter += 1;
