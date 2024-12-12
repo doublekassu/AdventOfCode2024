@@ -1044,16 +1044,22 @@ public class Puzzle2 {
                 safeListCounter += 1;
             }
 
+            //If one term isn't true
             else {
                 for (int i=0; i<row.size(); i++) {
                     //reset the boolean values
                     ascendOrDescend = false;
                     differ = true;
                     ArrayList<Integer> tempRow = new ArrayList<>(row);
+                    //Remove a value at a time
                     tempRow.remove(i);
+
+                    //Check ascending or descending term
                     List<Integer> ascendedRowInLoop = tempRow.stream().sorted().collect(Collectors.toList());
                     if (tempRow.equals(ascendedRowInLoop) || tempRow.equals(ascendedRowInLoop.reversed())) {
                         ascendOrDescend = true;
+
+                        //If asc or desc is true, check if difference between next value is over 3 or if its same as current
                         currentValue = ascendedRowInLoop.get(0)-1;
                         for (int k=0; k<ascendedRowInLoop.size(); k++) {
                             if (ascendedRowInLoop.get(k) - currentValue > 3 || ascendedRowInLoop.get(k).equals(currentValue)) {
@@ -1061,8 +1067,11 @@ public class Puzzle2 {
                             }
                             currentValue = ascendedRowInLoop.get(k);
                         }
+                        //If both of the terms are true, add to the counter
                         if (differ && ascendOrDescend) {
                             safeListCounter++;
+
+                            //Stop the outer (i) iteration because the term can be true by removing multiple single values (thus getting a bigger number on the counter)
                             break;
                         }
                     }
