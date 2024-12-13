@@ -1,75 +1,94 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Puzzle2 {
     public static void main(String[] args) throws FileNotFoundException {
-        EaseMethods easeMethods = new EaseMethods();
-        ArrayList<List<Integer>> listOfRows = easeMethods.addIntegersToListFromFile("input.txt");
+        ArrayList<List<Integer>> listOfRows = addIntegersToListFromFile("input.txt");
         
         //Count the safe reports
         Integer safeListCounter = 0;
 
         for (List<Integer> row : listOfRows) {
-            boolean ascendOrDescend = false;
-            boolean differ = true;
-            //Sort to ascending
-            List<Integer> ascendedRow = row.stream().sorted().collect(Collectors.toList());
-            //Check if the row is already ascending or descending
-            if (row.equals(ascendedRow) || row.equals(ascendedRow.reversed())) {
-                ascendOrDescend = true;
-            }
-
-            Integer currentValue = ascendedRow.get(0) - 1;
-            for (int i=0; i<ascendedRow.size(); i++) {
-                //If current value's and next value's difference is more than 3 or current value is the same as the next one, set differ to false
-                if (ascendedRow.get(i) - currentValue > 3 || ascendedRow.get(i).equals(currentValue)) {
-                    differ = false;
-                }
-                currentValue = ascendedRow.get(i);
-            }
+            boolean ascendingOrDescending = checkIfAscendingOrDescending(row);
+            boolean differ = checkIfNeighbourNumbersDiffer(row);
             
             //If both terms are true, add 1 to the safeListCounter
-            if (differ && ascendOrDescend) {
-                safeListCounter += 1;
+            if (differ && ascendingOrDescending) {
+                safeListCounter++;
             }
 
-            //If one term isn't true
             else {
-                for (int i=0; i<row.size(); i++) {
-                    //reset the boolean values
-                    ascendOrDescend = false;
-                    differ = true;
-                    ArrayList<Integer> tempRow = new ArrayList<>(row);
-                    //Remove a value at a time
-                    tempRow.remove(i);
-
-                    //Check ascending or descending term
-                    List<Integer> ascendedRowInLoop = tempRow.stream().sorted().collect(Collectors.toList());
-                    if (tempRow.equals(ascendedRowInLoop) || tempRow.equals(ascendedRowInLoop.reversed())) {
-                        ascendOrDescend = true;
-
-                        //If asc or desc is true, check if difference between next value is over 3 or if its same as current
-                        currentValue = ascendedRowInLoop.get(0)-1;
-                        for (int k=0; k<ascendedRowInLoop.size(); k++) {
-                            if (ascendedRowInLoop.get(k) - currentValue > 3 || ascendedRowInLoop.get(k).equals(currentValue)) {
-                                differ = false;
-                            }
-                            currentValue = ascendedRowInLoop.get(k);
-                        }
-                        //If both of the terms are true, add to the counter
-                        if (differ && ascendOrDescend) {
-                            safeListCounter++;
-
-                            //Stop the outer (i) iteration because the term can be true by removing multiple single values (thus getting a bigger number on the counter)
-                            break;
-                        }
-                    }
+                if (checkIfValueRemovalChangesResult(row)) {
+                    safeListCounter++;
                 }
             }
         }
+
         System.out.println("Total amount of reports: " + listOfRows.size());
         System.out.println("Total amount of safe reports (the correct answer): " + safeListCounter);
+    }
+
+    public static boolean checkIfValueRemovalChangesResult(List<Integer> row) {
+        for (int i=0; i<row.size(); i++) {
+            ArrayList<Integer> tempRow = new ArrayList<>(row);
+
+            //Remove a value at a time
+            tempRow.remove(i);
+
+            if (checkIfAscendingOrDescending(tempRow) && checkIfNeighbourNumbersDiffer(tempRow)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean checkIfNeighbourNumbersDiffer(List<Integer> row) {
+        List<Integer> ascendedRow = row.stream().sorted().collect(Collectors.toList());
+
+        //Convert list to ascending order for simplicity in logic
+        Integer currentValue = ascendedRow.get(0) - 1;
+        for (int i=0; i<row.size(); i++) {
+
+            //If current value's and next value's difference is more than 3 or current value is the same as the next one, set differ to false
+            if ((ascendedRow.get(i) - currentValue) > 3 || ascendedRow.get(i) - currentValue < 1) {
+                return false;
+            }
+            currentValue = ascendedRow.get(i);
+        }
+
+        return true;
+    }
+
+    public static boolean checkIfAscendingOrDescending(List<Integer> row) {
+
+        //Sort to ascending
+        List<Integer> ascendedRow = row.stream().sorted().collect(Collectors.toList());
+        List<Integer> descendedRow = ascendedRow.reversed();
+        
+        //Check if the row is already ascending or descending
+        if (row.equals(ascendedRow) || row.equals(descendedRow)) {
+            return true;
+        }
+        return false;
+    }
+    
+    //Use pathing relative to the one code is ran on!
+    public static ArrayList<List<Integer>> addIntegersToListFromFile(String filePath) throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        ArrayList<List<Integer>> listOfRows = new ArrayList<>();
+        while (scanner.hasNextLine()) {
+            List<Integer> rowNumbers = Arrays.stream(scanner.nextLine().split(" ")).map(Integer::parseInt).collect(Collectors.toList());
+            listOfRows.add(rowNumbers);
+        }
+        
+        scanner.close();
+        return listOfRows;
     }
 }
