@@ -6,16 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class test {
-    public static void main(String[] args) throws FileNotFoundException {
-        ArrayList<List<Integer>> listOfRows = addIntegersToListFromFile("input.txt");
-
-        for (List<Integer> row : listOfRows) {
-            System.out.println(row);
-        }
-    }
-
-    public static ArrayList<List<Integer>> addIntegersToListFromFile(String filePath) throws FileNotFoundException {
+public class EaseMethods {
+    public ArrayList<List<Integer>> addIntegersToListFromFile(String filePath) throws FileNotFoundException {
         File file = new File(filePath);
         Scanner scanner = new Scanner(file);
         ArrayList<List<Integer>> listOfRows = new ArrayList<>();
