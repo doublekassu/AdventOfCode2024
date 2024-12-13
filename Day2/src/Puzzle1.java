@@ -28,7 +28,7 @@ public class Puzzle1 {
         System.out.println("Total amount of safe reports (the correct answer): " + safeListCounter);
     }
 
-    public static boolean checkIfNeighbourNumbersDiffer(List<Integer> row) {
+    static boolean checkIfNeighbourNumbersDiffer(List<Integer> row) {
         List<Integer> ascendedRow = row.stream().sorted().collect(Collectors.toList());
 
         //Convert list to ascending order for simplicity in logic
@@ -45,7 +45,7 @@ public class Puzzle1 {
         return true;
     }
 
-    public static boolean checkIfAscendingOrDescending(List<Integer> row) {
+    static boolean checkIfAscendingOrDescending(List<Integer> row) {
         //Sort to ascending
         List<Integer> ascendedRow = row.stream().sorted().collect(Collectors.toList());
         List<Integer> descendedRow = ascendedRow.reversed();
@@ -56,7 +56,7 @@ public class Puzzle1 {
         return false;
     }
 
-    public static ArrayList<List<Integer>> addIntegersToListFromFile(String filePath) throws FileNotFoundException {
+    static ArrayList<List<Integer>> addIntegersToListFromFile(String filePath) throws FileNotFoundException {
         File file = new File(filePath);
         Scanner scanner = new Scanner(file);
         ArrayList<List<Integer>> listOfRows = new ArrayList<>();

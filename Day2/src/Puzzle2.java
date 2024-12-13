@@ -33,7 +33,7 @@ public class Puzzle2 {
         System.out.println("Total amount of safe reports (the correct answer): " + safeListCounter);
     }
 
-    public static boolean checkIfValueRemovalChangesResult(List<Integer> row) {
+    static boolean checkIfValueRemovalChangesResult(List<Integer> row) {
         for (int i=0; i<row.size(); i++) {
             ArrayList<Integer> tempRow = new ArrayList<>(row);
 
@@ -48,7 +48,7 @@ public class Puzzle2 {
         return false;
     }
 
-    public static boolean checkIfNeighbourNumbersDiffer(List<Integer> row) {
+    static boolean checkIfNeighbourNumbersDiffer(List<Integer> row) {
         List<Integer> ascendedRow = row.stream().sorted().collect(Collectors.toList());
 
         //Convert list to ascending order for simplicity in logic
@@ -65,7 +65,7 @@ public class Puzzle2 {
         return true;
     }
 
-    public static boolean checkIfAscendingOrDescending(List<Integer> row) {
+    static boolean checkIfAscendingOrDescending(List<Integer> row) {
 
         //Sort to ascending
         List<Integer> ascendedRow = row.stream().sorted().collect(Collectors.toList());
@@ -79,7 +79,7 @@ public class Puzzle2 {
     }
     
     //Use pathing relative to the one code is ran on!
-    public static ArrayList<List<Integer>> addIntegersToListFromFile(String filePath) throws FileNotFoundException {
+    static ArrayList<List<Integer>> addIntegersToListFromFile(String filePath) throws FileNotFoundException {
         File file = new File(filePath);
         Scanner scanner = new Scanner(file);
         ArrayList<List<Integer>> listOfRows = new ArrayList<>();
