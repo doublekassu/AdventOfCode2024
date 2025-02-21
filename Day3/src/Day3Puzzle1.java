@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Puzzle1 {
+public class Day3Puzzle1 {
     public static void main(String[] args) throws Exception {
 
         //Read the whole input as a String
