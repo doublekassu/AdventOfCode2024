@@ -25,7 +25,7 @@ public class Day3Puzzle2 {
             removeEndContent.setLength(dontIndexes.get(dontIndexes.size()-1));
             String removeEndContentString = removeEndContent.toString();
             
-            removeEndContentString = content.replaceAll("(?s)don't\\(\\).*?do\\(\\)", "");
+            removeEndContentString = removeEndContentString.replaceAll("(?s)don't\\(\\).*?do\\(\\)", "");
             Integer mulAmount = mulAmount(removeEndContentString);
             System.out.println("Mul amount: " + mulAmount);
         }
