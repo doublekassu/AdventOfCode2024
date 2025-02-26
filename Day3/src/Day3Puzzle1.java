@@ -9,7 +9,7 @@ public class Day3Puzzle1 {
     public static void main(String[] args) throws Exception {
 
         //Read the whole input as a String
-        Scanner scanner = new Scanner(Paths.get("input.txt"), StandardCharsets.UTF_8.name());
+        Scanner scanner = new Scanner(Paths.get("Day3/input.txt"), StandardCharsets.UTF_8.name());
         String content = scanner.useDelimiter("\\A").next();
         scanner.close();
 

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Puzzle2 {
+public class Day1Puzzle2 {
     public static void main(String[] args) throws FileNotFoundException {
         ArrayList<ArrayList<Integer>> listOfLists = divideInputIntoTwoLists("input.txt");
         ArrayList<Integer> leftList = listOfLists.get(0);

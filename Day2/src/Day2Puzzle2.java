@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class Puzzle2 {
+public class Day2Puzzle2 {
     public static void main(String[] args) throws FileNotFoundException {
         ArrayList<List<Integer>> listOfRows = addIntegersToListFromFile("input.txt");
         
